@@ -1,0 +1,14 @@
+# Ignore OS Junk
+.DS_Store
+
+#Ignore Backend Build files
+#./mvnw spring-boot:run
+/backend/target
+#IntelliJ
+/backend/.idea
+/backend/.classpath
+/backend/.project
+
+#Ignore frontend build files
+/frontend/node_modules
+/frontend/build
