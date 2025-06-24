@@ -6,6 +6,7 @@
   gap: 16px;
   margin-top: 1rem;
   padding: 1rem;
+  justify-content: center;
 }
 
 input {

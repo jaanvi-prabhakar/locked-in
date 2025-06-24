@@ -5,7 +5,7 @@ import './App.css';
 function App() {
 
   const[goals, setGoals] = useState([]);
-  const[newGoal, setNewGoal] = useState( {title: "", description: ""});
+  const[newGoal, setNewGoal] = useState( {title: "", description: "", dueDate: ""});
 
   const fetchGoals = () => {
     fetch("api/goals")
@@ -54,10 +54,15 @@ function App() {
           value={newGoal.description}
           onChange={e => setNewGoal({...newGoal, description: e.target.value})}
         />
+        <input
+          type="date"
+          value={newGoal.dueDate}
+          onChange={(e) => setNewGoal({...newGoal, dueDate: e.target.value})}
+        />
         <button onClick={addGoal}>Add Goal</button>
       </div>
 
-      {goals.length == 0 && (
+      {goals.length === 0 && (
         <p style={{ textAlign: "center" }}>No goals yet. Add one above!</p>
       )}
 

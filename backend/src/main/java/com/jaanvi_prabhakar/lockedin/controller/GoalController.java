@@ -34,7 +34,7 @@ public class GoalController {
         return goalRespository.save(goal);
     }
 
-    @PutMapping
+    @PutMapping("/{id}/complete")
     public Mono<Goal> markAsComplete(@PathVariable String id) {
         return goalRespository.findById(id)
                 .flatMap(goal -> {
