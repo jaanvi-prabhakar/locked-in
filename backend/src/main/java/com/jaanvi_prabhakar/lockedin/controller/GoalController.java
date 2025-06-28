@@ -1,6 +1,7 @@
 package com.jaanvi_prabhakar.lockedin.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,7 @@ import com.jaanvi_prabhakar.lockedin.repository.GoalRespository;
 import reactor.core.publisher.Mono;
 import reactor.core.publisher.Flux;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/goals")
 public class GoalController {
@@ -26,6 +28,11 @@ public class GoalController {
     @GetMapping
     public Flux<Goal> getAllGoals() {
         return goalRespository.findAll();
+    }
+
+    @GetMapping("/completed")
+    public Flux<Goal> getCompletedGoals() {
+        return goalRespository.findByCompletedTrue();
     }
 
     @PostMapping
