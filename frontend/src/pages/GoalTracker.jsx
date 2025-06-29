@@ -23,7 +23,7 @@ export default function GoalTracker() {
 
     const addGoal = () => {
         if (!newGoal.title.trim()) {
-            alert("Title is requireed to add a goal.")
+            alert("Title is required to add a goal.")
             return;
         }
         fetch("http://localhost:8080/api/goals", {
@@ -41,6 +41,19 @@ export default function GoalTracker() {
         .then(() => {
             fetchGoals();
         });
+    };
+
+    const deleteGoal = async (id) => {
+        try {
+            await fetch(`http://localhost:8080/api/goals/${id}`, {
+                method: "DELETE",
+            });
+
+            // After deletion, update local state by removing the deleted goal
+            setGoals((prevGoals) => prevGoals.filter(goal => goal.id !== id));
+        } catch (error) {
+            console.error("Error deleting goal: ", error);
+        }
     };
 
     useEffect(() => {
@@ -74,7 +87,12 @@ export default function GoalTracker() {
 
             <div className="goal-grid">
                 {goals.filter(goal => !goal.completed).map(goal => (
-                    <GoalCard key = {goal.id} goal = {goal} onComplete={markComplete} />
+                    <GoalCard 
+                        key = {goal.id} 
+                        goal = {goal} 
+                        onComplete={markComplete}
+                        onDelete={deleteGoal}
+                    />
                 ))}
             </div>
         </div>

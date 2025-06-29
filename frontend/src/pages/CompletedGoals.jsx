@@ -24,6 +24,19 @@ export default function CompletedGoals() {
         });
     };
 
+    const deleteGoal = async (id) => {
+        try {
+            await fetch(`http://localhost:8080/api/goals/${id}`, {
+                method: "DELETE",
+            });
+
+            // After deletion, update local state by removing the deleted goal
+            setGoals((prevGoals) => prevGoals.filter(goal => goal.id !== id));
+        } catch (error) {
+            console.log("Error deleting goal: ", error)
+        }
+    };
+
     return (
         <div>
             <h1>Completed Goals</h1>
@@ -37,6 +50,7 @@ export default function CompletedGoals() {
                         goal = {goal} 
                         onComplete={() => {}} 
                         onUndo={() => markIncomplete(goal.id)}
+                        onDelete={deleteGoal}
                     />
                 ))}
             </div>
