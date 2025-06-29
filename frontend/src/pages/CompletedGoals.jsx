@@ -16,6 +16,14 @@ export default function CompletedGoals() {
             });
     }, []);
 
+    const markIncomplete = (id) => {
+        fetch(`http://localhost:8080/api/goals/${id}/incomplete`, {
+            method: "PUT"
+        }).then(() => {
+            setGoals(goals.filter(goal => goal.id !== id));
+        });
+    };
+
     return (
         <div>
             <h1>Completed Goals</h1>
@@ -24,7 +32,12 @@ export default function CompletedGoals() {
             ) : (
             <div className="goal-grid">
                 {goals.map(goal => (
-                    <GoalCard key = {goal.id} goal = {goal} onComplete={() => {}} />
+                    <GoalCard 
+                        key = {goal.id} 
+                        goal = {goal} 
+                        onComplete={() => {}} 
+                        onUndo={() => markIncomplete(goal.id)}
+                    />
                 ))}
             </div>
             )}

@@ -1,6 +1,8 @@
 package com.jaanvi_prabhakar.lockedin.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,9 +52,23 @@ public class GoalController {
                 });
     }
 
+    @PutMapping("{id}/incomplete")
+    public Mono<ResponseEntity<Goal>> markAsIncomplete(@PathVariable String id) {
+        return goalRespository.findById(id)
+                .flatMap(goal -> {
+                    goal.setCompleted(false);
+                    return goalRespository.save(goal)
+                            .map(updatedGoal -> ResponseEntity.ok(updatedGoal));
+                })
+                .defaultIfEmpty(ResponseEntity.notFound().build());
+    }
+
     @DeleteMapping("/{id}")
-    public Mono<Void> deleteGoal(@PathVariable String id) {
-        return goalRespository.deleteById(id);
+    public Mono<ResponseEntity<Void>> deleteGoal(@PathVariable String id) {
+        return goalRespository.findById(id)
+                .flatMap(existingGoal -> goalRespository.delete(existingGoal)
+                        .then(Mono.just(new ResponseEntity<Void>(HttpStatus.NO_CONTENT))))
+                .defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
 }

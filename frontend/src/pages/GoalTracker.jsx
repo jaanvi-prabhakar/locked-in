@@ -22,6 +22,10 @@ export default function GoalTracker() {
     };
 
     const addGoal = () => {
+        if (!newGoal.title.trim()) {
+            alert("Title is requireed to add a goal.")
+            return;
+        }
         fetch("http://localhost:8080/api/goals", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
@@ -65,7 +69,7 @@ export default function GoalTracker() {
                     onChange = {(e) => setNewGoal({ ...newGoal, dueDate: e.target.value })}
                 />
 
-                <button onClick={addGoal}>Add Goal</button>
+                <button onClick={addGoal} disabled={!newGoal.title.trim()}>Add Goal</button>
             </div>
 
             <div className="goal-grid">

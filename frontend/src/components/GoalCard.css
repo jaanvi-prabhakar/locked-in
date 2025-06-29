@@ -12,10 +12,43 @@
     transition: transform 0.2s;
   }
 
+  .goal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .goal-actions {
+    display: flex;
+    gap: 0.25rem;
+  }
+
 .goal-card:hover {
   transform: scale(1.02);
 }
 
 .goal-card p {
   flex-grow: 1;
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0 0.2rem;
+  margin: 0.2rem;
+  transition: transform 0.1s ease;
+}
+
+.icon-button:hover {
+  transform: scale(1.15);
+}
+
+.completed-label {
+  background-color: #eaeaea;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: bold;
+  display: inline-block;
 }
