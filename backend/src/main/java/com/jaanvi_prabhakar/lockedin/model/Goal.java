@@ -13,6 +13,8 @@ public class Goal {
     private String description;
     private boolean completed = false;
     private LocalDate dueDate;
+    private LocalDate completionDate;
+    private LocalDate createdAt;
 
     // Getters and setters
     public String getId() {
@@ -54,4 +56,21 @@ public class Goal {
     public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
     }
+
+    public LocalDate getCompletionDate() {
+        return completionDate;
+    }
+
+    public void setCompletionDate(LocalDate completionDate) {
+        this.completionDate = completionDate;
+    }
+
+    public LocalDate getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
+    }
+
 }
