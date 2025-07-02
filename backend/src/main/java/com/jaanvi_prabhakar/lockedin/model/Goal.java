@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Document(collection = "goals")
 public class Goal {
     @Id
@@ -12,8 +14,14 @@ public class Goal {
     private String title;
     private String description;
     private boolean completed = false;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dueDate;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate completionDate;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate createdAt;
 
     // Getters and setters

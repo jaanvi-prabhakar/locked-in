@@ -1,5 +1,7 @@
 package com.jaanvi_prabhakar.lockedin.controller;
 
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,9 +40,10 @@ public class GoalController {
     }
 
     @PostMapping
-    public Mono<Goal> createGoal(@RequestBody Goal goal) {
+    public ResponseEntity<Mono<Goal>> createGoal(@RequestBody Goal goal) {
         goal.setCompleted(false); // default
-        return goalRespository.save(goal);
+        goal.setCreatedAt(LocalDate.now());
+        return ResponseEntity.ok(goalRespository.save(goal));
     }
 
     @PutMapping("/{id}/complete")
@@ -48,6 +51,7 @@ public class GoalController {
         return goalRespository.findById(id)
                 .flatMap(goal -> {
                     goal.setCompleted(true);
+                    goal.setCompletionDate(LocalDate.now());
                     return goalRespository.save(goal);
                 });
     }
