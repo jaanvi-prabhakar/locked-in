@@ -12,6 +12,11 @@
     transition: transform 0.2s;
   }
 
+  .goal-card p {
+    font-size: 0.9rem;
+    color: #666;
+  }
+
   .goal-header {
     display: flex;
     justify-content: space-between;
@@ -46,9 +51,49 @@
 }
 
 .completed-label {
-  background-color: #eaeaea;
-  padding: 0.5rem 1rem;
+  background-color: #f0fdf4;
+  padding: 0.4rem 0.8rem;
   border-radius: 6px;
-  font-weight: bold;
+  font-weight: 600;
+  color: #256029;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 1px solid #c4e1c5;
+}
+
+.goal-dates {
+  background-color: #f8f9fa;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.date-row {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 1rem;
+  align-items: center;
+
+}
+
+.date-label {
+  font-weight: 500;
+  color: #555;
+}
+
+.date-value {
+  background-color: #e6f0ff;
+  color: #003366;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  font-weight: 500;
   display: inline-block;
+  min-width: fit-content;
+  
 }
