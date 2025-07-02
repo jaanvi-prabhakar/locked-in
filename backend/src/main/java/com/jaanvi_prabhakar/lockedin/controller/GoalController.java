@@ -41,6 +41,9 @@ public class GoalController {
 
     @PostMapping
     public ResponseEntity<Mono<Goal>> createGoal(@RequestBody Goal goal) {
+        if (goal.getTitle() == null || goal.getTitle().trim().isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
         goal.setCompleted(false); // default
         goal.setCreatedAt(LocalDate.now());
         return ResponseEntity.ok(goalRespository.save(goal));
@@ -61,6 +64,7 @@ public class GoalController {
         return goalRespository.findById(id)
                 .flatMap(goal -> {
                     goal.setCompleted(false);
+                    goal.setCompletionDate(null);
                     return goalRespository.save(goal)
                             .map(updatedGoal -> ResponseEntity.ok(updatedGoal));
                 })
