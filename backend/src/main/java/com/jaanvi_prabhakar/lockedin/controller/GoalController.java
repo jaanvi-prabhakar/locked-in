@@ -71,6 +71,18 @@ public class GoalController {
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
+    @PutMapping("{id}")
+    public Mono<ResponseEntity<Goal>> updateDueDate(@PathVariable String id, @RequestBody Goal updatedGoal) {
+        return goalRespository.findById(id)
+                .flatMap(goal -> {
+                    goal.setDescription(updatedGoal.getDescription());
+                    goal.setDueDate(updatedGoal.getDueDate());
+                    return goalRespository.save(goal);
+                })
+                .map(ResponseEntity::ok)
+                .defaultIfEmpty(ResponseEntity.notFound().build());
+    }
+
     @DeleteMapping("/{id}")
     public Mono<ResponseEntity<Void>> deleteGoal(@PathVariable String id) {
         return goalRespository.findById(id)

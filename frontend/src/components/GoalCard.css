@@ -34,6 +34,24 @@
 
 .goal-card p {
   flex-grow: 1;
+  word-wrap: break-word;
+}
+
+.goal-card textarea,
+.goal-card input[type="date"] {
+  width: 100%;
+  font-size: 0.9rem;
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  margin:0;
+  font-family: inherit;
+}
+
+.goal-card textarea {
+  resize: vertical; /* let users expand if needed */
+  min-height: 60px;
 }
 
 .icon-button {
@@ -48,6 +66,12 @@
 
 .icon-button:hover {
   transform: scale(1.15);
+}
+
+.icon-button:focus,
+.edit-buttons button:focus {
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
 }
 
 .completed-label {
@@ -79,7 +103,6 @@
   grid-template-columns: 80px 1fr;
   gap: 1rem;
   align-items: center;
-
 }
 
 .date-label {
@@ -95,5 +118,41 @@
   font-weight: 500;
   display: inline-block;
   min-width: fit-content;
-  
+}
+
+.edit-buttons {
+  display: flex;
+  gap:0.5rem;
+  margin-top: 0.5rem;
+  justify-content: flex-end;
+}
+
+.edit-buttons button {
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  border-radius: 6px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin: 0;
+}
+
+.edit-buttons button.save {
+  background-color: #007bff;
+  color: white;
+}
+
+.edit-buttons button.cancel {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.edit-buttons button.save:hover {
+  background-color: #006ae6;
+  opacity: 0.9;
+}
+
+.edit-buttons button.cancel:hover {
+  background-color: #e0e0e0;
 }

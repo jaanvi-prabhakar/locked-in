@@ -8,6 +8,7 @@ export default function GoalTracker() {
         description: "",
         dueDate: ""
     });
+    const [sortOption, setSortOption] = useState("due_asc");
 
     const fetchGoals = () => {
         fetch("http://localhost:8080/api/goals")
@@ -36,11 +37,24 @@ export default function GoalTracker() {
         })
     }
 
-    const markComplete = (id) => {
+    const markComplete = (id, updates) => {
         fetch(`http://localhost:8080/api/goals/${id}/complete`, {method: "PUT"})
         .then(() => {
             fetchGoals();
         });
+    };
+
+    const updateGoal = async (id, updates) => {
+        try {
+            await fetch(`http://localhost:8080/api/goals/${id}`, {
+                method: "PUT",
+                headers: {"Content-Type" : "application/json"},
+                body: JSON.stringify(updates),
+            });
+            fetchGoals();
+        } catch (err) {
+            console.error("Error updating due date:", err);
+        }
     };
 
     const deleteGoal = async (id) => {
@@ -55,6 +69,31 @@ export default function GoalTracker() {
             console.error("Error deleting goal: ", error);
         }
     };
+
+    const sortedGoals = [...goals].sort((a,b) => {
+        switch(sortOption) {
+            case "due_asc":
+                return new Date(a.dueDate || Infinity) - new Date(b.dueDate || Infinity);
+
+            case "due_desc":
+                return new Date(b.dueDate || 0) - new Date(a.dueDate || 0);
+
+            case "created_newest":
+                return new Date(b.createdAt) - new Date(a.createdAt);
+            
+            case "created_oldest":
+                return new Date(a.createdAt) - new Date(b.createdAt);
+
+            case "title_asc":
+                return a.title.localeCompare(b.title);
+            
+            case "title_desc":
+                return b.title.localeCompare(a.title);
+
+            default:
+                return 0;
+        }
+    });
 
     useEffect(() => {
         fetchGoals();
@@ -85,12 +124,29 @@ export default function GoalTracker() {
                 <button onClick={addGoal} disabled={!newGoal.title.trim()}>Add Goal</button>
             </div>
 
+            <div className="sort-controls">
+                <label htmlFor="sort">Sort By: </label>
+                <select
+                    id="sort"
+                    value={sortOption}
+                    onChange={(e) => setSortOption(e.target.value)}
+                >
+                    <option value="due_asc">Due Soonest</option>
+                    <option value="due_desc">Due Latest</option>
+                    <option value="created_newest">Recently Added</option>
+                    <option value="created_oldest">Oldest First</option>
+                    <option value="title_asc">Title A-Z</option>
+                    <option value="title_desc">Title Z-A</option>
+                </select>
+            </div>
+
             <div className="goal-grid">
-                {goals.filter(goal => !goal.completed).map(goal => (
+                {sortedGoals.filter(goal => !goal.completed).map(goal => (
                     <GoalCard 
                         key = {goal.id} 
                         goal = {goal} 
                         onComplete={markComplete}
+                        onUpdate={updateGoal}
                         onDelete={deleteGoal}
                     />
                 ))}
