@@ -5,16 +5,20 @@ export default function CompletedGoals() {
     const [goals, setGoals] = useState([]);
     const [sortOption, setSortOption] = useState("due_asc");
 
-    useEffect(() => {
+    const fetchGoals = () => {
         fetch("http://localhost:8080/api/goals/completed")
-            .then(res => res.json())
-            .then(data => {
-                console.log("Fetched completed goals: ", data);
-                setGoals(data);
-            })
-            .catch (err => {
-                console.error("Error fetching goals: ", err)
-            });
+        .then(res => res.json())
+        .then(data => {
+            console.log("Fetched completed goals: ", data);
+            setGoals(data);
+        })
+        .catch (err => {
+            console.error("Error fetching goals: ",err);
+        });
+    }
+
+    useEffect(() => {
+        fetchGoals();
     }, []);
 
     const markIncomplete = (id) => {
@@ -28,10 +32,10 @@ export default function CompletedGoals() {
     const sortedGoals = [...goals].sort((a,b) => {
         switch(sortOption) {
             case "due_asc":
-                return new Date(a.dueDate || Infinity) - new Date(b.dueDate || Infinity);
+                return (a.dueDate? new Date(a.dueDate) : Infinity) - (b.dueDate ? new Date(b.dueDate) : Infinity);
             
             case "due_desc":
-                return new Date(b.dueDate || 0) - new Date(a.dueDate || 0);
+                return (b.dueDate ? new Date(b.dueDate) : 0) - (a.dueDate ? new Date(a.dueDate) : 0);
 
             case "created_newest":
                 return new Date(b.createdAt) - new Date(a.createdAt);
@@ -97,6 +101,7 @@ export default function CompletedGoals() {
                                 onComplete={() => {}} 
                                 onUndo={() => markIncomplete(goal.id)}
                                 onDelete={deleteGoal}
+                                onUpdate={fetchGoals}
                             />
                         ))}
                     </div>

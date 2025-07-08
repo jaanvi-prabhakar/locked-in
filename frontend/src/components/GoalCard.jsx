@@ -15,8 +15,8 @@ export default function GoalCard({ goal, onComplete, onUndo, onUpdate, onDelete 
     const [editableDescription, setEditableDescription] = useState(goal.description);
     const [editableDueDate, setEditableDueDate] = useState(goal.dueDate || "");
 
-    const handleSave = () => {
-        onUpdate(goal.id, {
+    const handleSave = async () => {
+        await onUpdate(goal.id, {
             description: editableDescription,
             dueDate: editableDueDate,
         });

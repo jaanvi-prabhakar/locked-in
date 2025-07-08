@@ -73,10 +73,10 @@ export default function GoalTracker() {
     const sortedGoals = [...goals].sort((a,b) => {
         switch(sortOption) {
             case "due_asc":
-                return new Date(a.dueDate || Infinity) - new Date(b.dueDate || Infinity);
+                return (a.dueDate? new Date(a.dueDate) : Infinity) - (b.dueDate ? new Date(b.dueDate) : Infinity);
 
             case "due_desc":
-                return new Date(b.dueDate || 0) - new Date(a.dueDate || 0);
+                return (b.dueDate ? new Date(b.dueDate) : 0) - (a.dueDate ? new Date(a.dueDate) : 0);
 
             case "created_newest":
                 return new Date(b.createdAt) - new Date(a.createdAt);
