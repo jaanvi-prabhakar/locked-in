@@ -75,8 +75,15 @@ public class GoalController {
     public Mono<ResponseEntity<Goal>> updateDueDate(@PathVariable String id, @RequestBody Goal updatedGoal) {
         return goalRespository.findById(id)
                 .flatMap(goal -> {
-                    goal.setDescription(updatedGoal.getDescription());
-                    goal.setDueDate(updatedGoal.getDueDate());
+                    if (updatedGoal.getDescription() != null) {
+                        goal.setDescription(updatedGoal.getDescription());
+                    }
+                    if (updatedGoal.getDueDate() != null) {
+                        goal.setDueDate(updatedGoal.getDueDate());
+                    }
+                    if (updatedGoal.getPriority() != null && !updatedGoal.getPriority().isBlank()) {
+                        goal.setPriority(updatedGoal.getPriority());
+                    }
                     return goalRespository.save(goal);
                 })
                 .map(ResponseEntity::ok)

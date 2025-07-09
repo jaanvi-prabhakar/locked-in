@@ -24,6 +24,16 @@ public class Goal {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate createdAt;
 
+    private String priority; // ex "none", "low", "medium", "high"
+
+    // Constructor
+    public Goal() {
+        this.createdAt = LocalDate.now();
+        if (this.priority == null) {
+            this.priority = "none";
+        }
+    }
+
     // Getters and setters
     public String getId() {
         return id;
@@ -79,6 +89,14 @@ public class Goal {
 
     public void setCreatedAt(LocalDate createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getPriority() {
+        return priority;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = (priority == null || priority.isBlank()) ? "none" : priority.toLowerCase();
     }
 
 }

@@ -6,7 +6,8 @@ export default function GoalTracker() {
     const [newGoal, setNewGoal] = useState({
         title: "",
         description: "",
-        dueDate: ""
+        dueDate: "",
+        priority: "none"
     });
     const [sortOption, setSortOption] = useState("due_asc");
 
@@ -27,12 +28,18 @@ export default function GoalTracker() {
             alert("Title is required to add a goal.")
             return;
         }
+
+        if(!["low", "medium", "high", "none"].includes(newGoal.priority)) {
+            alert("Please select a valid priority");
+            return;
+        }
+
         fetch("http://localhost:8080/api/goals", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(newGoal)
         }).then(() => {
-            setNewGoal({title: "", description: "", dueDate: ""});
+            setNewGoal({title: "", description: "", dueDate: "", priority: "low"});
             fetchGoals(); // refresh goals list
         })
     }
@@ -90,10 +97,25 @@ export default function GoalTracker() {
             case "title_desc":
                 return b.title.localeCompare(a.title);
 
+            case "priority_high_to_low":
+                return priorityWeight(b.priority) - priorityWeight(a.priority);
+
+            case "priority_low_to_high":
+                return priorityWeight(a.priority) - priorityWeight(a.priority);
+
             default:
                 return 0;
         }
     });
+
+    const priorityWeight = (priority) => {
+        switch(priority?.toLowerCase()) {
+            case "high": return 3;
+            case "medium": return 2;
+            case "low": return 1;
+            default: return 0;
+        }
+    };
 
     useEffect(() => {
         fetchGoals();
@@ -120,6 +142,14 @@ export default function GoalTracker() {
                     value = {newGoal.dueDate}
                     onChange = {(e) => setNewGoal({ ...newGoal, dueDate: e.target.value })}
                 />
+                < select
+                    value={newGoal.priority}
+                    onChange={(e) => setNewGoal({...newGoal, priority: e.target.value})}
+                >
+                    <option value="high">High</option>
+                    <option value="medium">Medium</option>
+                    <option value="low">Low</option>
+                </select>
 
                 <button onClick={addGoal} disabled={!newGoal.title.trim()}>Add Goal</button>
             </div>
@@ -137,6 +167,8 @@ export default function GoalTracker() {
                     <option value="created_oldest">Oldest First</option>
                     <option value="title_asc">Title A-Z</option>
                     <option value="title_desc">Title Z-A</option>
+                    <option value="priority_high_to_low">High Priority</option>
+                    <option value="priority_low_to_high">Low Priority</option>
                 </select>
             </div>
 

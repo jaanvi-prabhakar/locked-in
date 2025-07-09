@@ -170,3 +170,36 @@
 .edit-buttons button.cancel:hover {
   background-color: #e0e0e0;
 }
+
+.priority-label {
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: white;
+  display: inline-block;
+  margin-top: 0.5rem;
+  min-width: auto;
+  max-width: fit-content;
+}
+
+.priority-label.high {
+  background-color: #fdecea;
+  color: #b71c1c;
+}
+
+.priority-label.medium {
+  background-color: #fff9db;
+  color: #8d6e00;
+}
+
+.priority-label.low {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.priority-label.none {
+  background-color: #f2f2f2;
+  color: #777;
+  border: 1px dashed #ccc;
+}
