@@ -146,6 +146,7 @@ export default function GoalTracker() {
                     value={newGoal.priority}
                     onChange={(e) => setNewGoal({...newGoal, priority: e.target.value})}
                 >
+                    <option value="none">Set Priority</option>
                     <option value="high">High</option>
                     <option value="medium">Medium</option>
                     <option value="low">Low</option>
