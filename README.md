@@ -14,9 +14,32 @@ Welcome to the official documentation for **Locked In**: a simple, powerful, and
 - Priority tag visualization
 - (Planned) Gamification with streaks and badges
 
-## System Architecture
+### Component Breakdown
+- **Frontend**: React with modular components and basic routing
+- **Backend**: Spring Boot (WebFlux for async/non-blocking support)
+- **Database**: MongoDB (via Spring Data Reactive Mongo)
 
-### Overview
+## API Reference
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET    | `/api/goals` | Get all goals |
+| GET    | `/api/goals/completed` | Get only completed goals |
+| POST   | `/api/goals` | Create a new goal |
+| PUT    | `/api/goals/{id}` | Update goal (description, due date, priority) |
+| PUT    | `/api/goals/{id}/complete` | Mark goal as complete |
+| PUT    | `/api/goals/{id}/incomplete` | Revert completion |
+| DELETE | `/api/goals/{id}` | Delete a goal |
+
+### Sample Goal JSON
+```json
+{
+  "title": "Finish project",
+  "description": "Work on frontend polish",
+  "dueDate": "2025-07-10",
+  "priority": "high"
+}
+```
 
 ## Developer Setup
 Prerequisites
