@@ -94,6 +94,12 @@ backend/
 │   └── LockedInApplication.java
 ```
 
+## License
+This project is licensed under the GNU Affero General Public License v3.0 (AGPL-3.0). See the [LICENSE](LICENSE) file for details.
+
 ## Contact
 Built by [@jaanvi-prabhakar](https://github.com/jaanviprabhakar)
-Feel free to open issues, feature requests, or PRs!
+Feel free to open issues, feature requests, or PRs! 
+> **Note:** This project is open-source for learning, contribution, and personal use.  
+> Commercial use, redistribution, or monetization of this project or its derivatives is **not permitted** without explicit permission.
+
